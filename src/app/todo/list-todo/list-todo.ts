@@ -33,9 +33,10 @@ export class ListTodo {
     if (confirmDelete) {
       await this.todoService.deleteTodo(todoId);
       this.toast.show('Todo deleted ❌');
-      this.ngOnInit();
+      await this.ngOnInit();
     }
   }
+
 
   navigateToAdd() {
     this.router.navigate(['/todo/create']);

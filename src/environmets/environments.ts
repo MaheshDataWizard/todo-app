@@ -3,13 +3,14 @@ import { initializeApp } from "firebase/app";
 
 // Firebase configuration (example only)
 export const firebaseConfig = {
-    apiKey: "[GCP_API_KEY]",
-    authDomain: "[GCP_AUTH_DOMAIN]",
-    projectId: "[GCP_PROJECT_ID]",
-    storageBucket: "[GCP_STORAGE_BUCKET]",
-    messagingSenderId: "[GCP_MESSAGE_SENDER]",
-    appId: "[GCP_APP_ID]"
+    apiKey: "AIzaSyAMRiEOeSkhGF-DlkskOJDh3YUuCzPZzxU",
+    authDomain: "todo-3e4dd.firebaseapp.com",
+    projectId: "todo-3e4dd",
+    storageBucket: "todo-3e4dd.firebasestorage.app",
+    messagingSenderId: "83595447978",
+    appId: "1:83595447978:web:fb2d5288c7bee2aad38ad3"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+

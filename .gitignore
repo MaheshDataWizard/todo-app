@@ -53,3 +53,5 @@ firebase.json
 .env.test.local
 .env.production.local
 
+
+/src/environments/environment.example.ts    

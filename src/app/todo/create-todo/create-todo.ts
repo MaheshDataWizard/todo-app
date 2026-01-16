@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../../services/todo-service';
 import { Todo } from '../../models/todo-model';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../services/toast-service';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-create-todo',
