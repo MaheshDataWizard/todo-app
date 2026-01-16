@@ -55,7 +55,7 @@ export class ListTodo implements OnInit, OnDestroy {
       },
       (error) => {
         console.error(error);
-        this.toast.show('Realtime update failed ❌');
+        this.toast.show('Realtime update failed ❌', 'error');
         this.isLoading = false;
       }
     );
@@ -65,7 +65,7 @@ export class ListTodo implements OnInit, OnDestroy {
     if (!todo.id || todo.isCompleted) return;
 
     const message = 'Mark this task as Completed?';
-    this.toast.show(message);
+    this.toast.show(message, 'info');
 
     const confirmed = confirm(message);
     if (!confirmed) return;
@@ -80,10 +80,10 @@ export class ListTodo implements OnInit, OnDestroy {
         isCompleted: true,
       });
 
-      this.toast.show('Task marked as Completed ✅');
+      this.toast.show('Task marked as Completed ✅', 'success');
     } catch (error) {
       console.error(error);
-      this.toast.show('Failed to update task ❌');
+      this.toast.show('Failed to update task ❌', 'error');
     }
   }
 
@@ -91,7 +91,7 @@ export class ListTodo implements OnInit, OnDestroy {
     const todo = this.todos.find((t) => t.id === todoId);
     if (!todo) return;
     if (!todo.isCompleted) {
-      this.toast.show('Cannot delete a pending task ❌ Complete it first!');
+      this.toast.show('Cannot delete a pending task ❌ Complete it first!', 'error');
       return;
     }
 
@@ -100,10 +100,10 @@ export class ListTodo implements OnInit, OnDestroy {
 
     try {
       await this.todoService.deleteTodo(todoId);
-      this.toast.show('Todo deleted ❌');
+      this.toast.show('Todo deleted ❌', 'success');
     } catch (error) {
       console.error(error);
-      this.toast.show('Delete failed ❌');
+      this.toast.show('Delete failed ❌', 'error');
     }
   }
 
