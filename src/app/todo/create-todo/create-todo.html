@@ -19,8 +19,8 @@
         </label>
 
         <div class="actions">
-            <button type="submit">
-                {{ isEditMode ? 'Update' : 'Add' }}
+            <button type="submit" [disabled]="isSubmitting">
+                {{ isEditMode ? 'Update Todo' : 'Create Todo' }}
             </button>
 
             <button type="button" class="cancel" (click)="cancel()">Cancel</button>

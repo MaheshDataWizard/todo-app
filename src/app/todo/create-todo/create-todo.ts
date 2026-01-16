@@ -14,7 +14,6 @@ import { ToastService } from '../../services/toast-service';
   styleUrl: './create-todo.css',
 })
 export class CreateTodo implements OnInit {
-
   todoId?: string;
 
   title = '';
@@ -22,6 +21,7 @@ export class CreateTodo implements OnInit {
   isCompleted = false;
 
   isEditMode = false;
+  isSubmitting = false;
 
   constructor(
     private todoService: TodoService,
@@ -44,22 +44,49 @@ export class CreateTodo implements OnInit {
     }
   }
 
+  /** ✅ FORM SUBMIT */
   async submitTodo() {
+    if (!this.validateForm()) return;
+
+    this.isSubmitting = true;
+
     const todo: Todo = {
-      title: this.title,
-      description: this.description,
-      isCompleted: this.isCompleted
+      title: this.title.trim(),
+      description: this.description.trim(),
+      isCompleted: this.isCompleted,
     };
 
-    if (this.isEditMode && this.todoId) {
-      await this.todoService.updateTodo(this.todoId, todo);
-      this.toast.show('Todo updated successfully ✅');
-    } else {
-      await this.todoService.addTodo(todo);
-      this.toast.show('Todo added successfully 🎉');
+    try {
+      if (this.isEditMode && this.todoId) {
+        await this.todoService.updateTodo(this.todoId, todo);
+        this.toast.show('Todo updated successfully ✅');
+      } else {
+        await this.todoService.addTodo(todo);
+        this.toast.show('Todo added successfully 🎉');
+      }
+
+      this.router.navigate(['/todo']);
+    } catch (error) {
+      console.error(error);
+      this.toast.show('Something went wrong ❌');
+    } finally {
+      this.isSubmitting = false;
+    }
+  }
+
+  /** 🔍 VALIDATION */
+  private validateForm(): boolean {
+    if (!this.title.trim()) {
+      this.toast.show('Title is required ❗');
+      return false;
     }
 
-    this.router.navigate(['/todo']);
+    if (!this.description.trim()) {
+      this.toast.show('Description is required ❗');
+      return false;
+    }
+
+    return true;
   }
 
   cancel() {
