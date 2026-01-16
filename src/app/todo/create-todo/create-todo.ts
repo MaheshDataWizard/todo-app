@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../../services/todo-service';
 import { Todo } from '../../models/todo-model';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../services/toast-service';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-create-todo',
@@ -15,7 +14,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './create-todo.css',
 })
 export class CreateTodo implements OnInit {
-
   todoId?: string;
 
   title = '';
@@ -23,6 +21,8 @@ export class CreateTodo implements OnInit {
   isCompleted = false;
 
   isEditMode = false;
+  isSubmitting = false;
+  isLoading = false;
 
   constructor(
     private todoService: TodoService,
@@ -36,31 +36,59 @@ export class CreateTodo implements OnInit {
 
     if (this.todoId) {
       this.isEditMode = true;
+      this.isLoading = true;
       const todo = await this.todoService.getTodoById(this.todoId);
       if (todo) {
         this.title = todo.title;
         this.description = todo.description;
         this.isCompleted = todo.isCompleted;
       }
+      this.isLoading = false;
     }
   }
 
+
   async submitTodo() {
+    if (!this.validateForm()) return;
+
+    this.isSubmitting = true;
+
     const todo: Todo = {
-      title: this.title,
-      description: this.description,
-      isCompleted: this.isCompleted
+      title: this.title.trim(),
+      description: this.description.trim(),
+      isCompleted: this.isCompleted,
     };
 
-    if (this.isEditMode && this.todoId) {
-      await this.todoService.updateTodo(this.todoId, todo);
-      this.toast.show('Todo updated successfully ✅');
-    } else {
-      await this.todoService.addTodo(todo);
-      this.toast.show('Todo added successfully 🎉');
+    try {
+      if (this.isEditMode && this.todoId) {
+        await this.todoService.updateTodo(this.todoId, todo);
+        this.toast.show('Todo updated successfully ✅');
+      } else {
+        await this.todoService.addTodo(todo);
+        this.toast.show('Todo added successfully 🎉');
+      }
+
+      this.router.navigate(['/todo']);
+    } catch (error) {
+      console.error(error);
+      this.toast.show('Something went wrong ❌');
+    } finally {
+      this.isSubmitting = false;
+    }
+  }
+
+  private validateForm(): boolean {
+    if (!this.title.trim()) {
+      this.toast.show('Title is required ❗');
+      return false;
     }
 
-    this.router.navigate(['/todo']);
+    if (!this.description.trim()) {
+      this.toast.show('Description is required ❗');
+      return false;
+    }
+
+    return true;
   }
 
   cancel() {

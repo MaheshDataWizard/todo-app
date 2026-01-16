@@ -27,15 +27,6 @@ export class TodoService {
         }));
     }
 
-    updateTodo(todoId: string, todo: Todo) {
-        const docRef = doc(this.firestore, 'todos', todoId);
-        return updateDoc(docRef, {
-            title: todo.title,
-            description: todo.description,
-            isCompleted: todo.isCompleted
-        });
-    }
-
     async getTodoById(id: string): Promise<Todo | null> {
         const docRef = doc(this.firestore, 'todos', id);
         const snapshot = await getDoc(docRef);
@@ -44,8 +35,17 @@ export class TodoService {
 
         return {
             id: snapshot.id,
-            ...(snapshot.data() as Todo)
+            ...(snapshot.data() as Omit<Todo, 'id'>)
         };
+    }
+
+    updateTodo(todoId: string, todo: Todo) {
+        const docRef = doc(this.firestore, 'todos', todoId);
+        return updateDoc(docRef, {
+            title: todo.title,
+            description: todo.description,
+            isCompleted: todo.isCompleted
+        });
     }
 
     deleteTodo(todoId: string) {

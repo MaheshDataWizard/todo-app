@@ -1,21 +1,26 @@
 <div class="container">
-    <!-- Top Navigation -->
     <div class="top-nav">
-        <button (click)="navigateToAdd()">+ Add Todo</button>
+        <button class="toggle-btn" (click)="navigateToAdd()">+ Add Todo</button>
     </div>
 
     <h1>Todo List</h1>
 
-    <!-- Grid Container for Todos -->
     <div class="todo-grid">
-        <div class="todo-card" *ngFor="let todo of todos">
+        <div class="todo-card" *ngFor="let todo of todos; trackBy: trackById">
             <h2>{{ todo.title }}</h2>
-            <p>{{ todo.description }}</p>
-            <p>Status: {{ todo.isCompleted ? 'Completed' : 'Pending' }}</p>
+            <p>{{ todo.description | slice:0:20 }}...</p>
+
+            <p class="status" [class.completed]="todo.isCompleted">
+                Status: {{ todo.isCompleted ? 'Completed ✅' : 'Pending ⏳' }}
+            </p>
 
             <div class="actions">
-                <button (click)="deleteTodo(todo.id!)">Delete</button>
-                <button [routerLink]="['/todo/edit', todo.id]">Edit</button>
+                <button *ngIf="!todo.isCompleted" class="complete-btn" (click)="confirmMarkComplete(todo)">
+                    Mark Completed
+                </button>
+
+                <button *ngIf="todo.isCompleted" class="delete-btn" (click)="deleteTodo(todo.id!)">Delete</button>
+                <button class="toggle-btn" [routerLink]="['/todo/edit', todo.id]">Edit</button>
             </div>
         </div>
     </div>

@@ -1,12 +1,19 @@
-<div class="container">
+<div *ngIf="isLoading" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Loading todo...</p>
+</div>
+
+
+<div *ngIf="!isLoading" class="container">
 
     <div class="top-nav">
-        <button class="link-btn" [routerLink]="['/todo']">← Back to List</button>
+        <button class="link-btn" routerLink="/todo">← Back to List</button>
     </div>
 
     <h1>{{ isEditMode ? 'Update Todo' : 'Create Todo' }}</h1>
 
-    <form>
+    <form (ngSubmit)="submitTodo()">
+
         <input type="text" name="title" placeholder="Title" [(ngModel)]="title" required />
 
         <input type="text" name="description" placeholder="Description" [(ngModel)]="description" required />
@@ -17,8 +24,8 @@
         </label>
 
         <div class="actions">
-            <button type="button" (click)="submitTodo()">
-                {{ isEditMode ? 'Update' : 'Add' }}
+            <button type="submit" [disabled]="isSubmitting">
+                {{ isEditMode ? 'Update Todo' : 'Create Todo' }}
             </button>
 
             <button type="button" class="cancel" (click)="cancel()">Cancel</button>
