@@ -1,0 +1,27 @@
+<div class="container">
+
+    <div class="top-nav">
+        <button class="link-btn" [routerLink]="['/todo']">← Back to List</button>
+    </div>
+
+    <h1>{{ isEditMode ? 'Update Todo' : 'Create Todo' }}</h1>
+
+    <form>
+        <input type="text" name="title" placeholder="Title" [(ngModel)]="title" required />
+
+        <input type="text" name="description" placeholder="Description" [(ngModel)]="description" required />
+
+        <label>
+            <input type="checkbox" name="isCompleted" [(ngModel)]="isCompleted" />
+            Is Completed
+        </label>
+
+        <div class="actions">
+            <button type="button" (click)="submitTodo()">
+                {{ isEditMode ? 'Update' : 'Add' }}
+            </button>
+
+            <button type="button" class="cancel" (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>
