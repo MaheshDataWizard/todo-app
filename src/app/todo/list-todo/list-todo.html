@@ -1,0 +1,22 @@
+<div class="container">
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <button (click)="navigateToAdd()">+ Add Todo</button>
+    </div>
+
+    <h1>Todo List</h1>
+
+    <!-- Grid Container for Todos -->
+    <div class="todo-grid">
+        <div class="todo-card" *ngFor="let todo of todos">
+            <h2>{{ todo.title }}</h2>
+            <p>{{ todo.description }}</p>
+            <p>Status: {{ todo.isCompleted ? 'Completed' : 'Pending' }}</p>
+
+            <div class="actions">
+                <button (click)="deleteTodo(todo.id!)">Delete</button>
+                <button [routerLink]="['/todo/edit', todo.id]">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>

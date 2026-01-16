@@ -1,0 +1,63 @@
+.todo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 0;
+}
+
+.todo-card {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+    margin: 0 0 6px;
+    color: #111;
+}
+
+p {
+    margin: 4px 0;
+    color: #555;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 10px;
+    margin-right: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:first-of-type {
+    background: #ef4444;
+    color: white;
+}
+
+button:first-of-type:hover {
+    background: #dc2626;
+}
+
+button:last-of-type {
+    background: #10b981;
+    color: white;
+}
+
+button:last-of-type:hover {
+    background: #059669;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+@media (max-width: 768px) {
+    .todo-grid {
+        grid-template-columns: 1fr;
+    }
+}
