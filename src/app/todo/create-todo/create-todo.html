@@ -1,4 +1,10 @@
-<div class="container">
+<div *ngIf="isLoading" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Loading todo...</p>
+</div>
+
+
+<div *ngIf="!isLoading" class="container">
 
     <div class="top-nav">
         <button class="link-btn" routerLink="/todo">← Back to List</button>

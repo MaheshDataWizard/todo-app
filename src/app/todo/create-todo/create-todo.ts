@@ -22,6 +22,7 @@ export class CreateTodo implements OnInit {
 
   isEditMode = false;
   isSubmitting = false;
+  isLoading = false;
 
   constructor(
     private todoService: TodoService,
@@ -35,12 +36,14 @@ export class CreateTodo implements OnInit {
 
     if (this.todoId) {
       this.isEditMode = true;
+      this.isLoading = true;
       const todo = await this.todoService.getTodoById(this.todoId);
       if (todo) {
         this.title = todo.title;
         this.description = todo.description;
         this.isCompleted = todo.isCompleted;
       }
+      this.isLoading = false;
     }
   }
 
