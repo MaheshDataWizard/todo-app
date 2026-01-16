@@ -15,7 +15,6 @@
             </p>
 
             <div class="actions">
-                <!-- ✅ ONLY PENDING -->
                 <button *ngIf="!todo.isCompleted" class="complete-btn" (click)="confirmMarkComplete(todo)">
                     Mark Completed
                 </button>

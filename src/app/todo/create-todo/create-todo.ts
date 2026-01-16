@@ -44,7 +44,7 @@ export class CreateTodo implements OnInit {
     }
   }
 
-  /** ✅ FORM SUBMIT */
+
   async submitTodo() {
     if (!this.validateForm()) return;
 
@@ -74,7 +74,6 @@ export class CreateTodo implements OnInit {
     }
   }
 
-  /** 🔍 VALIDATION */
   private validateForm(): boolean {
     if (!this.title.trim()) {
       this.toast.show('Title is required ❗');

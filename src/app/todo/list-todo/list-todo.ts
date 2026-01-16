@@ -38,7 +38,6 @@ export class ListTodo implements OnInit, OnDestroy {
     this.listenToTodos();
   }
 
-  /** 🔥 REALTIME TODOS */
   private listenToTodos() {
     this.isLoading = true;
 
@@ -62,13 +61,10 @@ export class ListTodo implements OnInit, OnDestroy {
     );
   }
 
-  /** ✅ ONE-WAY: MARK AS COMPLETED */
   confirmMarkComplete(todo: Todo) {
     if (!todo.id || todo.isCompleted) return;
 
     const message = 'Mark this task as Completed?';
-
-    // Toast before action
     this.toast.show(message);
 
     const confirmed = confirm(message);
@@ -91,13 +87,9 @@ export class ListTodo implements OnInit, OnDestroy {
     }
   }
 
-  /** 🗑 DELETE */
-  /** 🗑 DELETE ONLY IF COMPLETED */
   async deleteTodo(todoId: string) {
     const todo = this.todos.find((t) => t.id === todoId);
     if (!todo) return;
-
-    // ❌ Prevent deletion if not completed
     if (!todo.isCompleted) {
       this.toast.show('Cannot delete a pending task ❌ Complete it first!');
       return;
@@ -115,18 +107,13 @@ export class ListTodo implements OnInit, OnDestroy {
     }
   }
 
-
-  /** ➕ NAVIGATE */
   navigateToAdd() {
     this.router.navigate(['/todo/create']);
   }
-
-  /** ⚡ PERFORMANCE */
   trackById(index: number, todo: Todo) {
     return todo.id;
   }
 
-  /** 🔥 CLEANUP */
   ngOnDestroy(): void {
     if (this.unsubscribe) {
       this.unsubscribe();
