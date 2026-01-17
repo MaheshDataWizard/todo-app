@@ -15,7 +15,7 @@
 
 .link-btn {
     background: none;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #18181a;
     color: #6b7280;
     padding: 8px 16px;
     border-radius: 8px;
@@ -83,13 +83,20 @@ input[type="checkbox"] {
 }
 
 .actions {
+    width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 12px;
     margin-top: 24px;
 }
 
-button[type="submit"] {
+.actions>button {
     flex: 1;
+}
+
+
+button[type="submit"] {
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     color: white;
     padding: 12px 20px;
@@ -163,6 +170,8 @@ button[type="submit"]:disabled {
         transform: rotate(360deg);
     }
 }
+
+
 
 /* Loading text */
 .loading-overlay p {

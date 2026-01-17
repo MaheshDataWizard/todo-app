@@ -7,10 +7,10 @@
 <div *ngIf="!isLoading" class="container">
 
     <div class="top-nav">
-        <button class="link-btn" routerLink="/todo">← Back to List</button>
+        <button class="link-btn" routerLink="/todo">← </button>
     </div>
 
-    <h1>{{ isEditMode ? 'Update Todo' : 'Create Todo' }}</h1>
+    <h1>{{ isEditMode ? 'Update Todo' : 'Add Todo' }}</h1>
 
     <form (ngSubmit)="submitTodo()">
 
@@ -24,8 +24,8 @@
         </label>
 
         <div class="actions">
-            <button type="submit" [disabled]="isSubmitting">
-                {{ isEditMode ? 'Update Todo' : 'Create Todo' }}
+            <button type="submit" class="add-btn" [disabled]="isSubmitting">
+                {{ isEditMode ? 'Update' : 'Add' }}
             </button>
 
             <button type="button" class="cancel" (click)="cancel()">Cancel</button>
