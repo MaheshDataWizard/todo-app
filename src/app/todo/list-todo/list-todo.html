@@ -12,7 +12,7 @@
                     <th>Sr No.</th>
                     <th>Title</th>
                     <th>Description</th>
-                    <th>Status</th>
+                    <th>Status (Click to Complete)</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -24,14 +24,21 @@
                         {{ todo.description | slice:0:40 }}
                         <span *ngIf="todo.description.length > 40">...</span>
                     </td>
-                    <td><span class="status" [class.completed]="todo.isCompleted">
-                            {{ todo.isCompleted ? 'Completed' : 'Pending' }}
-                        </span></td>
+                    <td class="center">
+                        <!-- Pending → Clickable -->
+                        <span *ngIf="!todo.isCompleted" class="status pending clickable"
+                            (click)="confirmMarkComplete(todo)">
+                            Pending
+                        </span>
+
+                        <!-- Completed → Label only -->
+                        <span *ngIf="todo.isCompleted" class="status completed">
+                            Completed
+                        </span>
+                    </td>
+
                     <td class="actions">
-                        <button *ngIf="!todo.isCompleted" class="complete-btn" (click)="confirmMarkComplete(todo)">
-                            Complete
-                        </button>
-                        <button *ngIf="todo.isCompleted" class="delete-btn" (click)="deleteTodo(todo.id!)">
+                        <button class="delete-btn" (click)="deleteTodo(todo.id!)">
                             Delete
                         </button>
                         <button class="edit-btn" [routerLink]="['/todo/edit', todo.id]">
