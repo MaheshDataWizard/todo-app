@@ -7,7 +7,7 @@
 <div *ngIf="!isLoading" class="container">
 
     <div class="top-nav">
-        <button class="link-btn" routerLink="/todo"> ← </button>
+        <button class="link-btn" routerLink="/todo">← </button>
     </div>
 
     <h1>{{ isEditMode ? 'Update Todo' : 'Create Todo' }}</h1>
@@ -25,7 +25,7 @@
 
         <div class="actions">
             <button type="submit" [disabled]="isSubmitting">
-                {{ isEditMode ? 'Update Todo' : 'Create Todo' }}
+                {{ isEditMode ? 'Update' : 'Create' }}
             </button>
 
             <button type="button" class="cancel" (click)="cancel()">Cancel</button>

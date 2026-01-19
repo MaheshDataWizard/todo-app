@@ -9,7 +9,6 @@
         <table class="todo-table">
             <thead>
                 <tr>
-
                     <th>Sr No.</th>
                     <th>Title</th>
                     <th>Description</th>
@@ -17,35 +16,25 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-
             <tbody>
                 <tr *ngFor="let todo of todos; let i = index; trackBy: trackById">
-                    <td>
-                        {{ i + 1 }}
-                    </td>
+                    <td class="center">{{ i + 1 }}</td>
                     <td>{{ todo.title }}</td>
-
                     <td>
                         {{ todo.description | slice:0:40 }}
                         <span *ngIf="todo.description.length > 40">...</span>
                     </td>
-
-                    <td>
-                        <span class="status" [class.completed]="todo.isCompleted">
+                    <td><span class="status" [class.completed]="todo.isCompleted">
                             {{ todo.isCompleted ? 'Completed' : 'Pending' }}
-                        </span>
-                    </td>
-
+                        </span></td>
                     <td class="actions">
                         <button *ngIf="!todo.isCompleted" class="complete-btn" (click)="confirmMarkComplete(todo)">
                             Complete
                         </button>
-
                         <button *ngIf="todo.isCompleted" class="delete-btn" (click)="deleteTodo(todo.id!)">
                             Delete
                         </button>
-
-                        <button class="toggle-btn" [routerLink]="['/todo/edit', todo.id]">
+                        <button class="edit-btn" [routerLink]="['/todo/edit', todo.id]">
                             Edit
                         </button>
                     </td>

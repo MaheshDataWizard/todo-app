@@ -99,19 +99,6 @@ export class ListTodo implements OnInit, OnDestroy {
     });
   }
 
-  private async markAsCompleted(todo: Todo) {
-    try {
-      await this.todoService.updateTodo(todo.id!, {
-        ...todo,
-        isCompleted: true,
-      });
-
-      this.toast.showMessage('Task marked as Completed ✅', 'success');
-    } catch (error) {
-      console.error(error);
-      this.toast.showMessage('Failed to update task ❌', 'error');
-    }
-  }
   deleteTodo(todoId: string) {
     const todo = this.todos.find(t => t.id === todoId);
     if (!todo) return;
