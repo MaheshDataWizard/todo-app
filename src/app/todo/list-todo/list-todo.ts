@@ -55,7 +55,7 @@ export class ListTodo implements OnInit, OnDestroy {
       },
       (error) => {
         console.error(error);
-        this.toast.show('Realtime update failed ❌', 'error');
+        this.toast.showMessage('Realtime update failed ❌', 'error');
         this.isLoading = false;
       }
     );
@@ -64,13 +64,39 @@ export class ListTodo implements OnInit, OnDestroy {
   confirmMarkComplete(todo: Todo) {
     if (!todo.id || todo.isCompleted) return;
 
-    const message = 'Mark this task as Completed?';
-    this.toast.show(message, 'info');
+    this.toast.show({
+      message: 'Mark this task as Completed?',
+      type: 'info',
+      actions: [
+        {
+          label: 'Yes',
+          action: async () => {
+            // 1️⃣ Hide confirmation toast
+            this.toast.clear();
 
-    const confirmed = confirm(message);
-    if (!confirmed) return;
+            try {
+              // 2️⃣ Perform action
+              await this.todoService.updateTodo(todo.id!, {
+                ...todo,
+                isCompleted: true,
+              });
 
-    this.markAsCompleted(todo);
+              // 3️⃣ Show success toast (auto-close)
+              this.toast.showMessage('Task marked as Completed ✅', 'success');
+            } catch {
+              this.toast.showMessage('Failed to update task ❌', 'error');
+            }
+          }
+        },
+        {
+          label: 'No',
+          action: () => {
+            // Hide confirmation toast only
+            this.toast.clear();
+          }
+        }
+      ]
+    });
   }
 
   private async markAsCompleted(todo: Todo) {
@@ -80,32 +106,45 @@ export class ListTodo implements OnInit, OnDestroy {
         isCompleted: true,
       });
 
-      this.toast.show('Task marked as Completed ✅', 'success');
+      this.toast.showMessage('Task marked as Completed ✅', 'success');
     } catch (error) {
       console.error(error);
-      this.toast.show('Failed to update task ❌', 'error');
+      this.toast.showMessage('Failed to update task ❌', 'error');
     }
   }
-
-  async deleteTodo(todoId: string) {
-    const todo = this.todos.find((t) => t.id === todoId);
+  deleteTodo(todoId: string) {
+    const todo = this.todos.find(t => t.id === todoId);
     if (!todo) return;
+
     if (!todo.isCompleted) {
-      this.toast.show('Cannot delete a pending task ❌ Complete it first!', 'error');
+      this.toast.showMessage('Complete task before deleting ❌', 'error');
       return;
     }
 
-    const confirmed = confirm('Are you sure you want to delete this completed todo?');
-    if (!confirmed) return;
-
-    try {
-      await this.todoService.deleteTodo(todoId);
-      this.toast.show('Todo deleted ❌', 'success');
-    } catch (error) {
-      console.error(error);
-      this.toast.show('Delete failed ❌', 'error');
-    }
+    this.toast.show({
+      message: 'Delete this completed todo?',
+      type: 'info',
+      actions: [
+        {
+          label: 'Yes',
+          action: async () => {
+            this.toast.clear();
+            try {
+              await this.todoService.deleteTodo(todoId);
+              this.toast.showMessage('Todo deleted ❌', 'success');
+            } catch {
+              this.toast.showMessage('Delete failed ❌', 'error');
+            }
+          }
+        },
+        {
+          label: 'No',
+          action: () => this.toast.clear()
+        }
+      ]
+    });
   }
+
 
   navigateToAdd() {
     this.router.navigate(['/todo/create']);

@@ -1,5 +1,11 @@
 <div class="toast-wrapper" *ngIf="toast$ | async as toast">
     <div class="toast" [ngClass]="toast.type">
-        {{ toast.message }}
+        <span>{{ toast.message }}</span>
+
+        <div class="toast-actions" *ngIf="toast.actions?.length">
+            <button *ngFor="let btn of toast.actions" (click)="btn.action()">
+                {{ btn.label }}
+            </button>
+        </div>
     </div>
 </div>

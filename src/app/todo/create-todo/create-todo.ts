@@ -62,16 +62,16 @@ export class CreateTodo implements OnInit {
     try {
       if (this.isEditMode && this.todoId) {
         await this.todoService.updateTodo(this.todoId, todo);
-        this.toast.show('Todo updated successfully ✅');
+        this.toast.showMessage('Todo updated successfully ✅', 'success');
       } else {
         await this.todoService.addTodo(todo);
-        this.toast.show('Todo added successfully 🎉');
+        this.toast.showMessage('Todo added successfully 🎉', 'success');
       }
 
       this.router.navigate(['/todo']);
     } catch (error) {
       console.error(error);
-      this.toast.show('Something went wrong ❌');
+      this.toast.showMessage('Something went wrong ❌', 'error');
     } finally {
       this.isSubmitting = false;
     }
@@ -79,12 +79,12 @@ export class CreateTodo implements OnInit {
 
   private validateForm(): boolean {
     if (!this.title.trim()) {
-      this.toast.show('Title is required ❗');
+      this.toast.showMessage('Title is required ❗', 'error');
       return false;
     }
 
     if (!this.description.trim()) {
-      this.toast.show('Description is required ❗');
+      this.toast.showMessage('Description is required ❗', 'error');
       return false;
     }
 

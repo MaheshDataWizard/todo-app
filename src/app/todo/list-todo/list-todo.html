@@ -5,23 +5,52 @@
 
     <h1>Todo List</h1>
 
-    <div class="todo-grid">
-        <div class="todo-card" *ngFor="let todo of todos; trackBy: trackById">
-            <h2>{{ todo.title }}</h2>
-            <p>{{ todo.description | slice:0:20 }}...</p>
+    <div class="table-wrapper">
+        <table class="todo-table">
+            <thead>
+                <tr>
 
-            <p class="status" [class.completed]="todo.isCompleted">
-                Status: {{ todo.isCompleted ? 'Completed ✅' : 'Pending ⏳' }}
-            </p>
+                    <th>Sr No.</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
 
-            <div class="actions">
-                <button *ngIf="!todo.isCompleted" class="complete-btn" (click)="confirmMarkComplete(todo)">
-                    Mark Completed
-                </button>
+            <tbody>
+                <tr *ngFor="let todo of todos; let i = index; trackBy: trackById">
+                    <td>
+                        {{ i + 1 }}
+                    </td>
+                    <td>{{ todo.title }}</td>
 
-                <button *ngIf="todo.isCompleted" class="delete-btn" (click)="deleteTodo(todo.id!)">Delete</button>
-                <button class="toggle-btn" [routerLink]="['/todo/edit', todo.id]">Edit</button>
-            </div>
-        </div>
+                    <td>
+                        {{ todo.description | slice:0:40 }}
+                        <span *ngIf="todo.description.length > 40">...</span>
+                    </td>
+
+                    <td>
+                        <span class="status" [class.completed]="todo.isCompleted">
+                            {{ todo.isCompleted ? 'Completed' : 'Pending' }}
+                        </span>
+                    </td>
+
+                    <td class="actions">
+                        <button *ngIf="!todo.isCompleted" class="complete-btn" (click)="confirmMarkComplete(todo)">
+                            Complete
+                        </button>
+
+                        <button *ngIf="todo.isCompleted" class="delete-btn" (click)="deleteTodo(todo.id!)">
+                            Delete
+                        </button>
+
+                        <button class="toggle-btn" [routerLink]="['/todo/edit', todo.id]">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
